@@ -12,6 +12,7 @@
     .card { background: white; margin: 15px; padding: 15px; border-radius: 12px; }
     button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 10px; margin-top: 10px; }
     .qty { display: flex; justify-content: space-between; margin: 10px 0; }
+    input { width:100%; padding:10px; margin-top:10px; }
   </style>
 </head>
 
@@ -22,8 +23,8 @@
 <!-- HOME -->
 <div id="home" class="screen active">
   <div class="card">
-    <h3>Welcome</h3>
-    <button onclick="show('category')">Start</button>
+    <h3>Start</h3>
+    <button onclick="show('category')">Start Order</button>
   </div>
 </div>
 
@@ -31,7 +32,7 @@
 <div id="category" class="screen">
   <div class="card">
     <h3>Select Service</h3>
-    <button onclick="show('product')">Ironing Service</button>
+    <button onclick="show('product')">Ironing</button>
   </div>
 </div>
 
@@ -40,22 +41,19 @@
   <div class="card">
     <h3>Select Clothes</h3>
 
-    <div class="qty">
-      Shirt 
+    <div class="qty">Shirt 
       <button onclick="change('shirt',-1)">-</button>
       <span id="shirt">0</span>
       <button onclick="change('shirt',1)">+</button>
     </div>
 
-    <div class="qty">
-      Pant 
+    <div class="qty">Pant 
       <button onclick="change('pant',-1)">-</button>
       <span id="pant">0</span>
       <button onclick="change('pant',1)">+</button>
     </div>
 
-    <div class="qty">
-      Saree 
+    <div class="qty">Saree 
       <button onclick="change('saree',-1)">-</button>
       <span id="saree">0</span>
       <button onclick="change('saree',1)">+</button>
@@ -63,7 +61,7 @@
 
     <h3>Total ₹<span id="total">0</span></h3>
 
-    <button onclick="show('cart')">Go to Cart</button>
+    <button onclick="showCart()">Go to Cart</button>
   </div>
 </div>
 
@@ -71,22 +69,24 @@
 <div id="cart" class="screen">
   <div class="card">
     <h3>Cart</h3>
-    <p>Shirt: <span id="cshirt">0</span></p>
-    <p>Pant: <span id="cpant">0</span></p>
-    <p>Saree: <span id="csaree">0</span></p>
-    <h3>Total ₹<span id="ctotal">0</span></h3>
+    <p>Shirt: <span id="cshirt"></span></p>
+    <p>Pant: <span id="cpant"></span></p>
+    <p>Saree: <span id="csaree"></span></p>
+    <h3>Total ₹<span id="ctotal"></span></h3>
 
-    <button onclick="showCheckout()">Checkout</button>
+    <button onclick="show('checkout')">Checkout</button>
   </div>
 </div>
 
 <!-- CHECKOUT -->
 <div id="checkout" class="screen">
   <div class="card">
-    <h3>Enter Address</h3>
-    <input type="text" id="address" placeholder="Enter Address" style="width:100%; padding:10px;">
-    
-    <button onclick="placeOrder()">Place Order</button>
+    <h3>Details</h3>
+    <input id="name" placeholder="Your Name">
+    <input id="phone" placeholder="Phone Number">
+    <input id="address" placeholder="Address">
+
+    <button onclick="sendOrder()">Place Order</button>
   </div>
 </div>
 
@@ -111,7 +111,7 @@ function change(item,val){
   document.getElementById("total").innerText=total;
 }
 
-function showCheckout(){
+function showCart(){
   document.getElementById("cshirt").innerText=shirt;
   document.getElementById("cpant").innerText=pant;
   document.getElementById("csaree").innerText=saree;
@@ -119,12 +119,30 @@ function showCheckout(){
   let total = shirt*15 + pant*20 + saree*30;
   document.getElementById("ctotal").innerText=total;
 
-  show('checkout');
+  show('cart');
 }
 
-function placeOrder(){
+function sendOrder(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
   let address = document.getElementById("address").value;
-  alert("Order Placed 🚀\nAddress: " + address);
+
+  let total = shirt*15 + pant*20 + saree*30;
+
+  let message = `New Order 🚀
+Name: ${name}
+Phone: ${phone}
+Address: ${address}
+
+Shirt: ${shirt}
+Pant: ${pant}
+Saree: ${saree}
+
+Total: ₹${total}`;
+
+  let url = "https://wa.me/91XXXXXXXXXX?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
 }
 </script>
 
