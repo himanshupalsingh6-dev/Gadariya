@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: #f2f2f2;
-    }
+    body { font-family: Arial; margin: 0; background: #f2f2f2; }
 
     .header {
       background: #007bff;
@@ -19,12 +15,14 @@
       font-size: 20px;
     }
 
+    .screen { display: none; }
+    .active { display: block; }
+
     .card {
       background: white;
       margin: 15px;
       padding: 15px;
       border-radius: 12px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     button {
@@ -35,6 +33,19 @@
       border: none;
       border-radius: 10px;
       font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .qty {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+
+    .qty button {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -43,21 +54,69 @@
 
 <div class="header">QuickPress 🚀</div>
 
-<div class="card">
-  <h3>Start Order</h3>
-  <button onclick="startOrder()">Start</button>
+<!-- HOME SCREEN -->
+<div id="home" class="screen active">
+  <div class="card">
+    <h3>Start Order</h3>
+    <button onclick="showOrder()">Start</button>
+  </div>
 </div>
 
-<div class="card">
-  <h4>Price List</h4>
-  <p>Shirt ₹15</p>
-  <p>Pant ₹20</p>
-  <p>Saree ₹30</p>
+<!-- ORDER SCREEN -->
+<div id="order" class="screen">
+  <div class="card">
+    <h3>Select Clothes</h3>
+
+    <div class="qty">
+      Shirt: 
+      <button onclick="change('shirt',-1)">-</button>
+      <span id="shirt">0</span>
+      <button onclick="change('shirt',1)">+</button>
+    </div>
+
+    <div class="qty">
+      Pant: 
+      <button onclick="change('pant',-1)">-</button>
+      <span id="pant">0</span>
+      <button onclick="change('pant',1)">+</button>
+    </div>
+
+    <div class="qty">
+      Saree: 
+      <button onclick="change('saree',-1)">-</button>
+      <span id="saree">0</span>
+      <button onclick="change('saree',1)">+</button>
+    </div>
+
+    <h3>Total: ₹<span id="total">0</span></h3>
+
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
 </div>
 
 <script>
-function startOrder() {
-  alert("Order screen coming next 🚀");
+let shirt=0, pant=0, saree=0;
+
+function showOrder(){
+  document.getElementById("home").classList.remove("active");
+  document.getElementById("order").classList.add("active");
+}
+
+function change(item, val){
+  if(item=="shirt"){ shirt=Math.max(0,shirt+val); }
+  if(item=="pant"){ pant=Math.max(0,pant+val); }
+  if(item=="saree"){ saree=Math.max(0,saree+val); }
+
+  document.getElementById("shirt").innerText=shirt;
+  document.getElementById("pant").innerText=pant;
+  document.getElementById("saree").innerText=saree;
+
+  let total = shirt*15 + pant*20 + saree*30;
+  document.getElementById("total").innerText=total;
+}
+
+function placeOrder(){
+  alert("Order placed 🚀");
 }
 </script>
 
