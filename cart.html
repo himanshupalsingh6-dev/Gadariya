@@ -4,30 +4,14 @@
 <link rel="stylesheet" href="style.css">
 <script src="app.js"></script>
 </head>
+
 <body onload="loadCart()">
 
-<div class="header">Cart</div>
+<div class="header">Your Cart 🛒</div>
 
 <div class="card" id="cartList"></div>
 
 <button onclick="location.href='checkout.html'">Checkout</button>
-
-<script>
-function loadCart(){
-  let data = JSON.parse(localStorage.getItem("cart")) || [];
-  let html="", total=0;
-
-  data.forEach(p=>{
-    if(p.qty>0){
-      html+=`<p>${p.name}: ${p.qty}</p>`;
-      total+=p.qty*p.price;
-    }
-  });
-
-  html+=`<h3>Total ₹${total}</h3>`;
-  document.getElementById("cartList").innerHTML=html;
-}
-</script>
 
 </body>
 </html>
