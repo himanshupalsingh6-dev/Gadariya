@@ -2,17 +2,19 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
 </head>
+
 <body>
 
-<div class="header">Checkout</div>
+<div class="header">Checkout 💳</div>
 
 <div class="card">
-  <input placeholder="Name">
-  <input placeholder="Phone">
-  <input placeholder="Address">
+  <input id="name" placeholder="Your Name">
+  <input id="phone" placeholder="Phone Number">
+  <input id="address" placeholder="Address">
 
-  <button onclick="location.href='success.html'">Place Order</button>
+  <button onclick="placeOrder()">Place Order</button>
 </div>
 
 </body>
