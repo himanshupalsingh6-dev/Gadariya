@@ -28,6 +28,16 @@ function loadProducts(){
   document.getElementById("productList").innerHTML = html;
 }
 
+let orders = [
+  {
+    id: 1,
+    customer: "Himanshu",
+    items: "Shirt x2, Pant x1",
+    address: "Moradabad",
+    status: "Pending"
+  }
+];
+
 // ================= ADD TO CART =================
 function addToCart(i){
   products[i].qty++;
