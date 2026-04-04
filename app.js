@@ -1,3 +1,9 @@
+let users = [
+  {id:"admin", password:"1234", role:"admin"},
+  {id:"partner1", password:"1111", role:"partner"},
+  {id:"delivery1", password:"2222", role:"delivery"}
+];
+
 // ================= PRODUCT DATA =================
 let products = [
   {name:"Shirt Iron", price:15, qty:0},
@@ -87,4 +93,27 @@ function placeOrder(){
 
   // optional reset cart
   localStorage.removeItem("cart");
+}
+function login(){
+  let id = document.getElementById("userid").value;
+  let pass = document.getElementById("password").value;
+
+  let user = users.find(u => u.id === id && u.password === pass);
+
+  if(user){
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    if(user.role === "admin"){
+      window.location.href = "admin.html";
+    }
+    else if(user.role === "partner"){
+      window.location.href = "partner.html";
+    }
+    else if(user.role === "delivery"){
+      window.location.href = "delivery.html";
+    }
+
+  } else {
+    alert("Invalid ID or Password ❌");
+  }
 }
