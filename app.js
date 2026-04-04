@@ -127,3 +127,64 @@ function login(){
     alert("Invalid ID or Password ❌");
   }
 }
+function loadPartnerOrders(){
+  let html = "";
+
+  orders.forEach(o => {
+
+    html += `
+      <div class="card">
+        <h4>Order #${o.id}</h4>
+        <p>${o.items}</p>
+        <p>${o.address}</p>
+        <p>Status: ${o.status}</p>
+
+        ${getButtons(o)}
+      </div>
+    `;
+  });
+
+  document.getElementById("orderList").innerHTML = html;
+}
+function getButtons(order){
+
+  if(order.status === "Pending"){
+    return `
+      <button onclick="updateStatus(${order.id}, 'Accepted')">Accept</button>
+      <button onclick="updateStatus(${order.id}, 'Rejected')">Reject</button>
+    `;
+  }
+
+  if(order.status === "Accepted"){
+    return `<button onclick="updateStatus(${order.id}, 'Pickup Received')">Pickup Received</button>`;
+  }
+
+  if(order.status === "Pickup Received"){
+    return `<button onclick="updateStatus(${order.id}, 'Ironing')">Start Ironing</button>`;
+  }
+
+  if(order.status === "Ironing"){
+    return `<button onclick="updateStatus(${order.id}, 'Ready')">Ironing Done</button>`;
+  }
+
+  if(order.status === "Ready"){
+    return `<button onclick="updateStatus(${order.id}, 'Out for Delivery')">Out for Delivery</button>`;
+  }
+
+  if(order.status === "Out for Delivery"){
+    return `<button onclick="updateStatus(${order.id}, 'Delivered')">Delivered</button>`;
+  }
+
+  return "";
+}
+function updateStatus(id, newStatus){
+
+  orders = orders.map(o => {
+    if(o.id === id){
+      o.status = newStatus;
+    }
+    return o;
+  });
+
+  loadPartnerOrders();
+}
