@@ -2,13 +2,44 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
 </head>
-<body>
+
+<body onload="loadAdmin()">
 
 <div class="header">Admin Panel 🧑‍💼</div>
 
+<!-- PRODUCT ADD -->
 <div class="card">
-  <h3>Welcome Admin</h3>
+  <h3>Add Product</h3>
+  <input id="pname" placeholder="Product Name">
+  <input id="pprice" placeholder="Customer Price">
+  <input id="ppartner" placeholder="Partner Pay">
+  <input id="pdelivery" placeholder="Delivery Pay">
+  <button onclick="addProduct()">Add Product</button>
+</div>
+
+<!-- PRODUCT LIST -->
+<div class="card">
+  <h3>Product List</h3>
+  <div id="adminProducts"></div>
+</div>
+
+<!-- USERS -->
+<div class="card">
+  <h3>Create User</h3>
+  <input id="uid" placeholder="User ID">
+  <input id="upass" placeholder="Password">
+  <select id="urole">
+    <option value="partner">Partner</option>
+    <option value="delivery">Delivery</option>
+  </select>
+  <button onclick="addUser()">Create User</button>
+</div>
+
+<div class="card">
+  <h3>User List</h3>
+  <div id="userList"></div>
 </div>
 
 </body>
