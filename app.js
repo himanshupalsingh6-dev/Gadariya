@@ -81,7 +81,7 @@ function placeOrder(){
   message += `\nTotal: ₹${total}\n`;
   message += `\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}`;
 
-  let url = "https://wa.me/91XXXXXXXXXX?text=" + encodeURIComponent(message);
+  let url = "https://wa.me/919997874502?text=" + encodeURIComponent(message);
 
   window.open(url, "_blank");
 
