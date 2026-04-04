@@ -199,6 +199,9 @@ function updateStatus(id, newStatus){
     }
     return o;
   });
+
+  loadPartnerOrders();
+}
   function loadDeliveryOrders(){
   let html = "";
 
@@ -323,4 +326,61 @@ function showUsers(){
   });
 
   document.getElementById("userList").innerHTML = html;
+}
+// ================= DELIVERY =================
+function loadDeliveryOrders(){
+  let html = "";
+
+  deliveryOrders.forEach(o => {
+    html += `
+      <div class="card">
+        <h4>Order #${o.id}</h4>
+        <p>${o.address}</p>
+        <p>Status: ${o.status}</p>
+        ${deliveryButtons(o)}
+      </div>
+    `;
+  });
+
+  document.getElementById("deliveryList").innerHTML = html;
+}
+
+function deliveryButtons(order){
+
+  if(order.status === "Assigned"){
+    return `<button onclick="updateDelivery(${order.id}, 'Accepted')">Accept</button>`;
+  }
+
+  if(order.status === "Accepted"){
+    return `<button onclick="updateDelivery(${order.id}, 'Picked from Customer')">Picked</button>`;
+  }
+
+  if(order.status === "Picked from Customer"){
+    return `<button onclick="updateDelivery(${order.id}, 'Delivered to Partner')">Delivered to Partner</button>`;
+  }
+
+  if(order.status === "Delivered to Partner"){
+    return `<button onclick="updateDelivery(${order.id}, 'Picked from Partner')">Picked from Partner</button>`;
+  }
+
+  if(order.status === "Picked from Partner"){
+    return `<button onclick="updateDelivery(${order.id}, 'Out for Delivery')">Out for Delivery</button>`;
+  }
+
+  if(order.status === "Out for Delivery"){
+    return `<button onclick="updateDelivery(${order.id}, 'Delivered')">Delivered</button>`;
+  }
+
+  return "";
+}
+
+function updateDelivery(id, newStatus){
+  deliveryOrders = deliveryOrders.map(o => {
+    if(o.id === id){
+      o.status = newStatus;
+    }
+    return o;
+  });
+
+  loadDeliveryOrders();
 }
