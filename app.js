@@ -13,6 +13,8 @@ let products = [
 
 // ================= LOAD PRODUCTS =================
 function loadProducts(){
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
   let html="";
 
   products.forEach((p,i)=>{
@@ -24,6 +26,9 @@ function loadProducts(){
       </div>
     `;
   });
+
+  document.getElementById("productList").innerHTML = html;
+}
 
   document.getElementById("productList").innerHTML = html;
 }
@@ -253,4 +258,69 @@ function updateStatus(id, newStatus){
 }
 
   loadPartnerOrders();
+}
+function loadAdmin(){
+  showProducts();
+  showUsers();
+}
+
+// ================= PRODUCTS =================
+function addProduct(){
+  let name = document.getElementById("pname").value;
+  let price = Number(document.getElementById("pprice").value);
+  let partner = Number(document.getElementById("ppartner").value);
+  let delivery = Number(document.getElementById("pdelivery").value);
+
+  let data = JSON.parse(localStorage.getItem("products")) || [];
+
+  data.push({name, price, partner, delivery, qty:0});
+
+  localStorage.setItem("products", JSON.stringify(data));
+
+  showProducts();
+}
+
+function showProducts(){
+  let data = JSON.parse(localStorage.getItem("products")) || [];
+  let html = "";
+
+  data.forEach((p,i)=>{
+    html += `
+      <p>${p.name} ₹${p.price} 
+      (P:${p.partner} D:${p.delivery})
+      <button onclick="deleteProduct(${i})">Delete</button></p>
+    `;
+  });
+
+  document.getElementById("adminProducts").innerHTML = html;
+}
+
+function deleteProduct(i){
+  let data = JSON.parse(localStorage.getItem("products"));
+  data.splice(i,1);
+  localStorage.setItem("products", JSON.stringify(data));
+  showProducts();
+}function addUser(){
+  let id = document.getElementById("uid").value;
+  let pass = document.getElementById("upass").value;
+  let role = document.getElementById("urole").value;
+
+  let data = JSON.parse(localStorage.getItem("users")) || [];
+
+  data.push({id, password:pass, role});
+
+  localStorage.setItem("users", JSON.stringify(data));
+
+  showUsers();
+}
+
+function showUsers(){
+  let data = JSON.parse(localStorage.getItem("users")) || [];
+  let html = "";
+
+  data.forEach(u=>{
+    html += `<p>${u.id} (${u.role})</p>`;
+  });
+
+  document.getElementById("userList").innerHTML = html;
 }
