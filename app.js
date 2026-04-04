@@ -41,3 +41,28 @@ function loadCart(){
 
   document.getElementById("cartList").innerHTML = html;
 }
+function placeOrder(){
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+
+  let data = JSON.parse(localStorage.getItem("cart")) || [];
+
+  let message = "New Order 🚀\n";
+
+  let total = 0;
+
+  data.forEach(p=>{
+    if(p.qty > 0){
+      message += `${p.name} x ${p.qty}\n`;
+      total += p.qty * p.price;
+    }
+  });
+
+  message += `Total: ₹${total}\n`;
+  message += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}`;
+
+  let url = "https://wa.me/9997874502?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
