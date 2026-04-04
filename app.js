@@ -25,3 +25,19 @@ function addToCart(i){
   localStorage.setItem("cart", JSON.stringify(products));
   alert("Added to cart");
 }
+function loadCart(){
+  let data = JSON.parse(localStorage.getItem("cart")) || [];
+  let html = "";
+  let total = 0;
+
+  data.forEach(p => {
+    if(p.qty > 0){
+      html += `<p>${p.name} x ${p.qty}</p>`;
+      total += p.qty * p.price;
+    }
+  });
+
+  html += `<h3>Total ₹${total}</h3>`;
+
+  document.getElementById("cartList").innerHTML = html;
+}
